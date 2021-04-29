@@ -15,10 +15,10 @@
 - On s'équipe ! Configuration de l'environnement de code
     - Ajout des outils (TS, ESLint, prettier, ...)
     - Transpilation en JS (+ expliquer ce que c'est)
-- Upgrade. Du JS à TS - **8a75f365a04c36e3b08f8ed8328b34af0fcd8212**
+- Upgrade. Du JS à TS
 - Ne faites confiance à personne : la validation des données (DTO)
 - Tester, c'est douter. Injection de dépendance.
-- Il va où ce fichier ? Architecture du code et du projet **8a75f365a04c36e3b08f8ed8328b34af0fcd8212**
+- Il va où ce fichier ? Architecture du code et du projet
 - Persistence des données (MongoDB) (+ expliquer mongoDB)
 - You shall not pass! Authentification par JWT II - le retour.
 - Factorio : comment mettre en boîte un back en TypeScript ? (ou pas)

@@ -7,5 +7,6 @@ module.exports = {
     'prettier',
     'plugin:prettier/recommended',
   ],
+  ignorePatterns: ['dist/'],
   rules: {},
 };

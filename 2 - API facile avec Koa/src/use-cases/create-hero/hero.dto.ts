@@ -1,9 +1,6 @@
-import { IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 
 export class HeroDto {
-  @IsUUID()
-  id!: string;
-
   @IsString()
   @MinLength(1)
   @MaxLength(100)
@@ -12,10 +9,10 @@ export class HeroDto {
   @IsString()
   @MinLength(1)
   @MaxLength(50)
-  power: string;
+  power!: string;
 
   @IsString()
   @MinLength(1)
   @MaxLength(500)
-  description: string;
+  description!: string;
 }

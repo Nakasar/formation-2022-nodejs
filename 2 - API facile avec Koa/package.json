@@ -6,32 +6,41 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint .",
-    "start": "node dist/index.js",
-    "start:watch": "ts-node-dev --project tsconfig.json src/index.ts"
+    "start": "node dist/start.js",
+    "start:watch": "ts-node-dev --project tsconfig.json src/start.ts",
+    "test:unit": "jest --config jest.config.unit.js --coverage",
+    "test:unit:watch": "jest --config jest.config.unit.js --coverage --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tsconfig/node12": "^1.0.7",
+    "@types/jest": "^26.0.23",
     "@types/koa__router": "^8.0.4",
+    "@types/koa": "^2.13.1",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/lodash": "^4.14.168",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
+    "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"
   },
   "dependencies": {
     "@koa/router": "^10.0.0",
-    "@types/koa": "^2.13.1",
-    "@types/koa-bodyparser": "^4.3.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "lodash": "^4.17.21",
     "uuid": "^8.3.2"
   }
 }

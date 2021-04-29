@@ -3,7 +3,7 @@ import { plainToClass } from 'class-transformer';
 
 import { HeroDto } from './hero.dto';
 
-class ValidationError extends Error {
+export class HeroValidationError extends Error {
   public readonly errors: unknown[];
 
   constructor({ message, errors }: { message: string; errors: unknown[] }) {
@@ -18,7 +18,7 @@ export async function validateHero(
   const hero = plainToClass(HeroDto, heroData);
   const validationResult = await validate(hero);
   if (validationResult.length > 0) {
-    const error = new ValidationError({
+    const error = new HeroValidationError({
       message: 'Hero is not valid.',
       errors: validationResult,
     });

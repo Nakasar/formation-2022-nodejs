@@ -5,3 +5,7 @@
 # Librairies
 node_modules/
 output
+
+# Artifacts
+dist/
+coverage/

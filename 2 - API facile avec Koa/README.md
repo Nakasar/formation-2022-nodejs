@@ -37,6 +37,8 @@ Les librairies utiles :
 * eslint-plugin-prettier
 * ts-node-dev
 * ts-node
+* @types/koa__router
+* @types/koa-bodyparser
 
 La configuration "basique" pour un projet TypeScript :
 
@@ -66,9 +68,9 @@ Les configurations "basiques" pour prettier et eslint :
 `.prettierrc.js`
 ```javascript
 module.exports = {
-  arrowParens: 'always’,
-  endOfLine: 'lf’,
-  quoteProps: 'consistent’,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+  quoteProps: 'consistent',
   semi: true,
   singleQuote: true,
   tabWidth: 2,
@@ -79,13 +81,13 @@ module.exports = {
 `.eslintrc.js`
 ```javascript
 module.exports = {
-  parser: '@typescript-eslint/parser’,
-  plugins: ['@typescript-eslint’],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   root: true,
   extends: [
-    'plugin:@typescript-eslint/recommended’,
-    'prettier/@typescript-eslint’,
-    'plugin:prettier/recommended’,
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:prettier/recommended',
   ],
   rules: {}
 };

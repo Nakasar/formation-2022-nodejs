@@ -1,16 +1,22 @@
 import Router from '@koa/router';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
+import { MongoClient } from 'mongodb';
 
-import { HeroesInMemoryRepository } from './services/heroes/heroes-in-memory.repository';
 import { GetHeroesSummarizedUseCase } from './use-cases/get-heroes/get-heroes.use-case';
 import { GetHeroUseCase } from './use-cases/get-hero/get-hero.use-case';
 import { DeleteHeroUseCase } from './use-cases/delete-hero/delete-hero.use-case';
 import { CreateHeroUseCase } from './use-cases/create-hero/create-hero.use-case';
 import { HeroesController } from './controllers/heroes/heroes.controller';
+import { HeroesMongodbRepository } from './services/heroes/hero-mongodb.repository';
 
 export interface ApplicationConfiguration {
   port: number;
+  services: {
+    mongodb: {
+      url: string;
+    };
+  };
 }
 
 export class Application {
@@ -20,7 +26,11 @@ export class Application {
 
   async start(): Promise<void> {
     // Initialized repositories (driven adapters)
-    const heroesRepository = new HeroesInMemoryRepository();
+    const client = new MongoClient(this.configuration.services.mongodb.url);
+    await client.connect();
+    const db = client.db('formation');
+
+    const heroesRepository = new HeroesMongodbRepository(db);
 
     // Initialize use-cases
     const createHero = new CreateHeroUseCase(heroesRepository);

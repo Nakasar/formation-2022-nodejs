@@ -16,10 +16,11 @@
   "devDependencies": {
     "@tsconfig/node12": "^1.0.7",
     "@types/jest": "^26.0.23",
-    "@types/koa__router": "^8.0.4",
     "@types/koa": "^2.13.1",
     "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa__router": "^8.0.4",
     "@types/lodash": "^4.14.168",
+    "@types/mongodb": "^3.6.12",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
@@ -41,6 +42,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "lodash": "^4.17.21",
+    "mongodb": "^3.6.6",
     "uuid": "^8.3.2"
   }
 }

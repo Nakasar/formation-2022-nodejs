@@ -3,17 +3,13 @@ import Router from '@koa/router';
 import { v4 as uuid } from 'uuid';
 import bodyParser from 'koa-bodyparser';
 
+import { validateHero } from './hero.validator';
+import { HeroDto } from './hero.dto';
+
 // On prépare un nouveau routeur pour les héros.
 const heroRouter = new Router();
 
-interface Hero {
-  id: string;
-  name: string;
-  power: string;
-  description: string;
-}
-
-const heroes: Hero[] = [
+const heroes: HeroDto[] = [
   { id: uuid(), name: 'Superman', power: 'Laser', description: 'The Superman' },
 ];
 
@@ -26,13 +22,23 @@ heroRouter.get('/heroes', (ctx) => {
   }));
 });
 
-heroRouter.post('/heroes', (ctx) => {
-  const hero = {
-    id: uuid(), // Ici, on s'assure de définir nous-même l'ID du héro, qui est unique (ou presque) grâce à une librairie externe.
-    name: ctx.request.body.name, // Evidemment, ici, on ne vérifie rien de ce que l'utilisateur nous envoie, ça viendra !
-    power: ctx.request.body.power,
-    description: ctx.request.body.description,
-  };
+heroRouter.post('/heroes', async (ctx) => {
+  let hero;
+  try {
+    hero = await validateHero({
+      id: uuid(), // Ici, on s'assure de définir nous-même l'ID du héro, qui est unique (ou presque) grâce à une librairie externe.
+      name: ctx.request.body.name,
+      power: ctx.request.body.power,
+      description: ctx.request.body.description,
+    });
+  } catch (error) {
+    ctx.status = 404;
+    ctx.body = {
+      message: 'Hero is not valid.',
+      errors: error,
+    }
+    return;
+  }
 
   heroes.push(hero);
 

@@ -23,6 +23,9 @@ export class HeroesController {
       try {
         const hero = await this.createHeroUseCase.execute({
           data: ctx.request.body,
+          context: {
+            user: ctx.context.user,
+          },
         });
 
         ctx.status = 201;

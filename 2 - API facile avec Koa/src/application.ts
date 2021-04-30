@@ -1,4 +1,5 @@
 import Router from '@koa/router';
+import jwt from 'jsonwebtoken';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import { MongoClient } from 'mongodb';
@@ -12,6 +13,9 @@ import { HeroesMongodbRepository } from './services/heroes/hero-mongodb.reposito
 
 export interface ApplicationConfiguration {
   port: number;
+  authentication: {
+    secretKey: string;
+  };
   services: {
     mongodb: {
       url: string;
@@ -100,8 +104,75 @@ export class Application {
       }
     });
 
+    this.app.use(async (ctx, next) => {
+      const authorizationHeader = ctx.headers.authorization;
+
+      console.log(authorizationHeader);
+
+      if (!authorizationHeader) {
+        ctx.state.user = null;
+
+        return next();
+      }
+
+      try {
+        const token = authorizationHeader.split('Bearer ')[1];
+        if (!token) {
+          ctx.status = 403;
+          ctx.body = {
+            message:
+              'Authentication header is not valid according to the bearer scheme.',
+          };
+          return;
+        }
+
+        // verify token
+        try {
+          const decoded = jwt.verify(
+            token,
+            this.configuration.authentication.secretKey,
+          ) as any;
+          ctx.state.user = {
+            token: decoded,
+            userId: decoded.sub,
+          };
+          return next();
+        } catch (error) {
+          ctx.status = 403;
+          ctx.body = { message: 'Invalid token provided as authentication.' };
+          return;
+        }
+      } catch (error) {
+        console.error();
+        ctx.status = 403;
+        ctx.message = 'Authentication could not be verified.';
+        return;
+      }
+    });
+
     const router = new Router();
     heroesController.init(router);
+
+    router.post('/auth', async (ctx) => {
+      const { userId } = ctx.request.body;
+
+      if (!userId) {
+        ctx.status = 400;
+        ctx.body = { message: 'No userID provided.' };
+        return;
+      }
+
+      const token = jwt.sign(
+        {
+          sub: userId,
+        },
+        this.configuration.authentication.secretKey,
+        { expiresIn: '1h' },
+      );
+
+      ctx.status = 201;
+      ctx.body = { token };
+    });
 
     this.app.use(router.routes()).use(router.allowedMethods());
 

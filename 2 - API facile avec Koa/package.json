@@ -4,10 +4,10 @@
   "description": "Il s'agit de créer une API simple disposant de quatre routes REST : * `GET /heroes` pour récupérer la liste résumée des héros avec juste leur ID et leur super-nom (status 206) * `POST /heroes` pour ajouter un héro dans la liste stockée (status 201) * `GET /hero/:heroId` pour récupérer les détails d'un héro (status 200) * `DELETE /hero/:heroID` pour supprimer un héro de la liste (status 204)",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "start": "node dist/start.js",
-    "start:watch": "ts-node-dev --project tsconfig.json src/start.ts",
+    "start:watch": "ts-node-dev --project tsconfig.build.json src/start.ts",
     "test:unit": "jest --config jest.config.unit.js --coverage",
     "test:unit:watch": "jest --config jest.config.unit.js --coverage --watch"
   },
